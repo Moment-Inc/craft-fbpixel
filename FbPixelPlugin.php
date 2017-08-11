@@ -32,7 +32,7 @@ class FbPixelPlugin extends BasePlugin
 
     public function getVersion()
     {
-        return '0.0.1';
+        return '0.0.2';
     }
 
     public function getDeveloper()
@@ -66,6 +66,11 @@ class FbPixelPlugin extends BasePlugin
         }
 
         return $this->getSettings()->pixelId;
+    }
+
+    public function getReleaseFeedUrl()
+    {
+        return 'https://raw.githubusercontent.com/moment-inc/craft-fbpixel/master/releases.json';
     }
 
     protected function defineSettings()

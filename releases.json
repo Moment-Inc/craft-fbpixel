@@ -1,0 +1,12 @@
+[
+  {
+    "version": "0.0.2",
+    "downloadUrl": "https://github.com/moment-inc/craft-fbpixel/archive/master.zip",
+    "date": "2017-08-11T11:00:00-11:00",
+    "notes": [
+      "[Added] Add releases.json",
+      "[Fixed] All the things?",
+      "[Improve] Mainly just testing this releases.json thing"
+    ]
+  }
+]
