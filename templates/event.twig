@@ -1,0 +1,5 @@
+<!-- Facebook Pixel {{ eventName }} Code -->
+<script>
+    fbq('track', '{{ eventName }}', JSON.parse('{{ eventData|json_encode|e("js") }}'));
+</script>
+<!-- End Facebook Pixel {{ eventName }} Code -->

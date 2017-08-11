@@ -1,0 +1,9 @@
+<!-- Facebook Pixel AddPaymentInfo Code -->
+<script>
+    ;(function (window) {
+        window.fbPixelAddPaymentInfoSendEvent = function () {
+            fbq('track', 'AddPaymentInfo', JSON.parse('{{ eventData|json_encode|e("js") }}'));
+        }
+    })(window);
+</script>
+<!-- End Facebook Pixel AddPaymentInfo Code -->
