@@ -7,6 +7,7 @@ class FbPixelPlugin extends BasePlugin
     {
         if (
             craft()->config->get('noop', 'fbpixel') ||
+            empty(craft()->plugins->getPlugin('commerce')) ||
             empty($this->getPixelId())
         ) {
             return;
@@ -32,7 +33,7 @@ class FbPixelPlugin extends BasePlugin
 
     public function getVersion()
     {
-        return '0.0.4';
+        return '0.0.5';
     }
 
     public function getDeveloper()
@@ -49,6 +50,10 @@ class FbPixelPlugin extends BasePlugin
     {
         if (empty($this->getPixelId())) {
             return ["Enter your pixel id <a href='{$this->getSettingsUrl()}'>here</a> for fbpixel to work."];
+        }
+
+        if (empty(craft()->plugins->getPlugin('commerce'))) {
+            return ['Craft Commerce is required for fbpixel to work.'];
         }
     }
 
