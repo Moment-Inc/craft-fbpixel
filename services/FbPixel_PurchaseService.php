@@ -29,7 +29,7 @@ class FbPixel_PurchaseService extends BaseApplicationComponent
 
     public function addHook()
     {
-        craft()->templates->hook('fbPixel.renderPurchase', [
+        craft()->templates->hook('fbPixel.renderBase', [
             $this, 'renderTemplate'
         ]);
     }

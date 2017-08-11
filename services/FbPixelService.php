@@ -11,10 +11,6 @@ class FbPixelService extends BaseApplicationComponent
      */
     public function listen()
     {
-        if (getenv('FB_PIXEL_NOOP')) {
-            return;
-        }
-
         craft()->templates->hook('fbPixel.renderBase', [
             $this, 'renderBase'
         ]);
@@ -32,7 +28,7 @@ class FbPixelService extends BaseApplicationComponent
     public function renderBase()
     {
         return $this->renderTemplate('base', [
-            'fbPixelId' => getenv('FB_PIXEL_ID')
+            'fbPixelId' => craft()->plugins->getPlugin('fbpixel')->getPixelId(),
         ]);
     }
 

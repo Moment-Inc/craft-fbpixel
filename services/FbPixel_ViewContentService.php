@@ -6,13 +6,15 @@ class FbPixel_ViewContentService extends BaseApplicationComponent
 {
     public function listen()
     {
-        craft()->templates->hook('fbPixel.renderViewContent', [
+        craft()->templates->hook('fbPixel.renderBase', [
             $this, 'render'
         ]);
     }
 
     public function render(&$context)
     {
-        return craft()->fbPixel->renderEvent('ViewContent', $context['fbPixelItem']);
+        if (!empty($context['fbPixelItem'])) {
+            return craft()->fbPixel->renderEvent('ViewContent', $context['fbPixelItem']);
+        }
     }
 }

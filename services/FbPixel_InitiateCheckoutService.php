@@ -14,9 +14,7 @@ class FbPixel_InitiateCheckoutService extends BaseApplicationComponent
     public function render()
     {
         $cart = craft()->commerce_cart->getCart();
-
         $addPaymentInfoRaw = craft()->fbPixel_addPaymentInfo->render();
-
         $item = [
             'content_name' => 'Checkout',
             'content_ids' => array_map(function($i) { return $i->sku; }, $cart->lineItems),
@@ -25,7 +23,6 @@ class FbPixel_InitiateCheckoutService extends BaseApplicationComponent
             'value' => $cart->totalPrice,
             'currency' => 'USD'
         ];
-
 
         return $addPaymentInfoRaw . craft()->fbPixel->renderEvent('InitiateCheckout', $item);
     }
