@@ -32,7 +32,7 @@ class FbPixelPlugin extends BasePlugin
 
     public function getVersion()
     {
-        return '0.0.3';
+        return '0.0.4';
     }
 
     public function getDeveloper()
