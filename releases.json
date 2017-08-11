@@ -1,11 +1,12 @@
 [
   {
-    "version": "0.0.5",
+    "version": "0.0.6",
     "downloadUrl": "https://github.com/moment-inc/craft-fbpixel/archive/master.zip",
     "date": "2017-08-11T11:00:00-12:00",
     "notes": [
+      "[Fixed] It should only run migrations when the Schema version is updated now",
       "[Fixed] Make sure plugin doesn't run and warn user that commerce isn't installed.",
-      "[Fixed] It should only run migrations when the Schema version is updated now"
+      "[Fixed] Now listening on commerce_cart.onAddToCart"
     ]
   }
 ]
