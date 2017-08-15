@@ -86,7 +86,7 @@ class FbPixelPlugin extends BasePlugin
     protected function defineSettings()
     {
         return [
-            'pixelId' => array(AttributeType::String),
+            'pixelId' => [AttributeType::String],
         ];
     }
 }
