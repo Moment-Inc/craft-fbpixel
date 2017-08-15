@@ -4,6 +4,8 @@ namespace Craft;
 
 class FbPixel_PurchaseService extends BaseApplicationComponent
 {
+    use HookAndFlashUtility;
+
     const FLASH_NAME = '_fbPixelOrderId';
 
     private $order;
@@ -25,13 +27,6 @@ class FbPixel_PurchaseService extends BaseApplicationComponent
             $this->order = $order;
             $this->addHook();
         }
-    }
-
-    public function addHook()
-    {
-        craft()->templates->hook('fbPixel.renderBase', [
-            $this, 'renderTemplate'
-        ]);
     }
 
     public function addFlash($event)

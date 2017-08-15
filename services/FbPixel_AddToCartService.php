@@ -4,6 +4,8 @@ namespace Craft;
 
 class FbPixel_AddToCartService extends BaseApplicationComponent
 {
+    use HookAndFlashUtility;
+
     const FLASH_NAME = '_fbPixelVariantIds';
 
     private $variantIds;
@@ -27,13 +29,6 @@ class FbPixel_AddToCartService extends BaseApplicationComponent
             $this->variantIds = craft()->userSession->getFlash(self::FLASH_NAME, null, true);
             $this->addHook();
         }
-    }
-
-    public function addHook()
-    {
-        craft()->templates->hook('fbPixel.renderBase', [
-            $this, 'renderTemplate'
-        ]);
     }
 
     public function onAddToCartHandler($event)

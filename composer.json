@@ -1,0 +1,15 @@
+{
+    "name": "Moment-Inc/craft-fbpixel",
+    "authors": [
+        {
+            "name": "davidmichaelhahn",
+            "email": "davidmichaelhahn@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Craft\\": "traits/"
+        }
+    }
+}
