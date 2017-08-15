@@ -11,7 +11,7 @@ This is a plugin that provides default Facebook Pixel functionality for Craft Co
   * A quick command to do this from the root of your Craft project is `mkdir tmp && curl -L https://github.com/moment-inc/craft-fbpixel/archive/master.zip -o tmp/craft-fbpixel.zip && unzip tmp/craft-fbpixel.zip -d tmp/ && cp -r tmp/craft-fbpixel craft/plugins/fbpixel; rm -rf tmp/;`.
 2. Enable the plugin via the admin interface
 3. Add a your pixel id in the admin settings
-4. Add {% hook 'fbpixel.renderBase' %} to your `_layout.twig`
+4. Add `{% hook 'fbpixel.renderBase' %}` to your `_layout.twig`
 5. Now your template will have all events that don't require additional setup.
 
 Head over to the [wiki](https://github.com/moment-inc/craft-fbpixel/wiki) for a complete list of events and some more deets.
