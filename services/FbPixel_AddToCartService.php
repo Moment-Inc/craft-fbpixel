@@ -2,8 +2,11 @@
 
 namespace Craft;
 
-class FbPixel_AddToCartService extends BaseApplicationComponent
-{
+class FbPixel_AddToCartService extends BaseApplicationComponent implements Flashable {
+
+    /**
+     * Traits
+     */
     use HookAndFlashUtility;
 
     const FLASH_NAME = '_fbPixelVariantIds';
@@ -13,39 +16,48 @@ class FbPixel_AddToCartService extends BaseApplicationComponent
     public function listen()
     {
         craft()->on('multiAdd_cart.MultiAddToCart', [
-            $this, 'onMultiAddToCartHandler'
+            $this, 'onMultiAddToCartHandler',
         ]);
 
         craft()->on('commerce_cart.onAddToCart', [
-            $this, 'onAddToCartHandler'
+            $this, 'onAddToCartHandler',
         ]);
 
         craft()->fbPixel_addToCart->checkFlash();
     }
 
+    /**
+     * @param $event
+     */
+    public function onAddToCartHandler($event)
+    {
+        $lineItem = $event->params['lineItem'];
+        $this->setFlash([$lineItem]);
+    }
+
+    /**
+     * @param $event
+     */
+    public function onMultiAddToCartHandler($event)
+    {
+        $lineItems = $event->params['lineItems'];
+        $this->setFlash($lineItems);
+    }
+
     public function checkFlash()
     {
-        if (craft()->userSession->hasFlash(self::FLASH_NAME)) {
+        if ($this->doesFlashExist()) {
             $this->variantIds = craft()->userSession->getFlash(self::FLASH_NAME, null, true);
             $this->addHook();
         }
     }
 
-    public function onAddToCartHandler($event)
+    /**
+     * @param $lineItems
+     */
+    public function setFlash($lineItems)
     {
-        $lineItem = $event->params['lineItem'];
-        $this->addFlash([$lineItem]);
-    }
-
-    public function onMultiAddToCartHandler($event)
-    {
-        $lineItems = $event->params['lineItems'];
-        $this->addFlash($lineItems);
-    }
-
-    public function addFlash($lineItems)
-    {
-        $variantIds = craft()->userSession->getFlash(self::FLASH_NAME);
+        $variantIds = $this->getFlash();
 
         if (empty($variantIds)) {
             $variantIds = [];
@@ -56,7 +68,21 @@ class FbPixel_AddToCartService extends BaseApplicationComponent
             $this->getVariantIds($lineItems)
         );
 
-        craft()->userSession->setFlash(self::FLASH_NAME, $variantIds);
+        $addToCartDataModel = new PixelAddToCartModel($variantIds);
+
+        $this->addFlash($addToCartDataModel);
+    }
+
+    /**
+     * @param $lineItems
+     * @return array
+     */
+    private function getVariantIds($lineItems)
+    {
+        return array_map(function ($lineItem) {
+            $purchasable = $lineItem->purchasable;
+            return (!empty($purchasable->defaultVariant)) ? $purchasable->defaultVariant->id : $purchasable->id;
+        }, $lineItems);
     }
 
     public function renderTemplate()
@@ -67,30 +93,16 @@ class FbPixel_AddToCartService extends BaseApplicationComponent
             $variant = craft()->commerce_variants->getVariantById($variantId);
 
             $eventData = [
-                'value' => $variant->salePrice,
-                'currency' => 'USD',
+                'value'        => $variant->salePrice,
+                'currency'     => 'USD',
                 'content_name' => 'Add To Cart',
-                'content_ids' => $variant->sku,
-                'content_type' => 'product'
+                'content_ids'  => $variant->sku,
+                'content_type' => 'product',
             ];
 
             $template .= craft()->fbPixel->renderEvent('AddToCart', $eventData);
         }
 
         return $template;
-    }
-
-    private function getVariantIds($lineItems)
-    {
-        return array_map( function($lineItem) {
-            $purchasable = $lineItem->purchasable;
-
-            if (!empty($purchasable->defaultVariant)) {
-                return $purchasable->defaultVariant->id;
-            } else {
-                return $purchasable->id;
-            }
-
-        }, $lineItems);
     }
 }

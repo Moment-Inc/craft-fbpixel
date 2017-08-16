@@ -5,7 +5,7 @@ namespace Craft;
 class FbPixelService extends BaseApplicationComponent
 {
     /*
-     * This is called in MomentPlugin::init(). It's mainly responsible for
+     * Include this into an init function within your project. It's mainly responsible for
      * what happens on a page load.
      *
      */
@@ -32,6 +32,11 @@ class FbPixelService extends BaseApplicationComponent
         ]);
     }
 
+    /**
+     * @param $eventName
+     * @param $eventData
+     * @return mixed
+     */
     public function renderEvent($eventName, $eventData)
     {
         return $this->renderTemplate('event', [
@@ -40,6 +45,11 @@ class FbPixelService extends BaseApplicationComponent
         ]);
     }
 
+    /**
+     * @param $template
+     * @param array $templateData
+     * @return mixed
+     */
     public function renderTemplate($template, $templateData = [])
     {
         # this is required because we're not using CP routes for this service

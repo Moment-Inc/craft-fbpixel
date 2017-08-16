@@ -11,6 +11,10 @@ class FbPixel_ViewContentService extends BaseApplicationComponent
         ]);
     }
 
+    /**
+     * @param $context
+     * @return mixed
+     */
     public function render(&$context)
     {
         if (!empty($context['fbPixelItem'])) {
