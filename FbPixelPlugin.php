@@ -8,7 +8,8 @@ class FbPixelPlugin extends BasePlugin
         if (
             craft()->config->get('noop', 'fbpixel') ||
             empty(craft()->plugins->getPlugin('commerce')) ||
-            empty($this->getPixelId())
+            empty($this->getPixelId()) ||
+            craft()->isConsole()
         ) {
             return;
         }
