@@ -24,8 +24,8 @@ class FbPixel_PurchaseService extends BaseApplicationComponent
         } else {
             $orderId = craft()->getRequest()->getParam('order');
         }
-        if ($orderId && craft()->userSession->get($orderId) !== true) {
-            craft()->userSession->set($orderId, true);
+        if ($orderId && craft()->httpSession->get($orderId) !== true) {
+            craft()->httpSession->set($orderId, true);
             $order = craft()->commerce_orders->getOrderById($orderId);
             $this->order = $order;
             $this->addHook();
