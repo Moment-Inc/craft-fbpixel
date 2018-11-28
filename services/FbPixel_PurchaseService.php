@@ -19,8 +19,13 @@ class FbPixel_PurchaseService extends BaseApplicationComponent
 
     public function checkFlash()
     {
-        if (craft()->userSession->hasFlash(self::FLASH_NAME)) {
+        if (craft()->userSession->hasFlash(self::FLASH_NAME, null, true)) {
             $orderId = craft()->userSession->getFlash(self::FLASH_NAME, null, true);
+        } else {
+            $orderId = craft()->getRequest()->getParam('order');
+        }
+        if ($orderId && craft()->userSession->get($orderId) !== true) {
+            craft()->userSession->set($orderId, true);
             $order = craft()->commerce_orders->getOrderById($orderId);
             $this->order = $order;
             $this->addHook();
