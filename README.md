@@ -1,4 +1,4 @@
-# Integrates Facebook Pixel with Craft Commerce
+# Important: this Repository is no longer maintained or supported
 
 ## Overview
 
